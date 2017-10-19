@@ -1,0 +1,2 @@
+# networkTowers
+Write a C++ program that gets the name of two files, say file1 and file2, as command line arguments and computes, the L-colouring for a given graph of cell towers and L-constraints on the separation of colours assigned to the towers (i.e., vertices in the graph). file1 will contain the input to the program, i.e., the graph of the cell towers, and the L-constraints. file 2 is where your program should write the output.
