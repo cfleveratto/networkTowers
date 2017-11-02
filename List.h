@@ -1,5 +1,8 @@
 #ifndef INCLUDED_LIST
 #define INCLUDED_LIST
+#include <iostream>
+using namespace std;
+
 template <class T>
 class List {
   //Class Invarient(CI): elements points to an array of numElements objects allocated on the heap where numElements > 0;

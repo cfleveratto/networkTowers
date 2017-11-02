@@ -1,5 +1,5 @@
 //#include "helpers.h"
-//#include "List.h"
+#include "List.h"
 #include "Tower.h"
 #include "Graph.h"
 #include <fstream>
@@ -102,7 +102,7 @@ int main (int argc, char * argv[]) {
       // assigned colours whose difference (as
       // defined above) is at least k. 
         
-      //readGraphAndLValues (TowerNet, LValues, inputFile);
+      readGraphAndLValues (TowerNet, LValues, inputFile);
       // ASSERT: TowerNet contains information, as a graph, about the
       //            towers and their connectivity
       //         TowerNet contains at least one vertex, and is a
