@@ -1,0 +1,7 @@
+Input: testReadIn.txt
+Output:
+Purpose: Test if the input file is read in correctly and the
+data is stored accordingly in the Graph user-defined class
+object. Does not check for the seperation constraints.
+
+Input: simpleColouring.txt

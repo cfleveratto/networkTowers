@@ -1,3 +1,12 @@
+//#include "helpers.h"
+//#include "List.h"
+#include "Tower.h"
+#include "Graph.h"
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
 // This program finds the least number of colours/frequencies that are
 //   needed for assigning colours to towers in a network of towers so
 //   that given constraints on the separation of colours between colours
@@ -78,13 +87,13 @@ int main (int argc, char * argv[]) {
     ofstream outFile (argv[2]); // outFile is the output file stream
 				// corresponding to the file with name
 				// in argv[2]
-    if ((ifFile != NULL) && (outFile != NULL)) {
+    if ((inFile != NULL) && (outFile != NULL)) {
 
       Graph<Tower *> TowerNet; // TowerNet will hold a graph of all the
       // cell towers. The cell towers are "named"
       // by positive integers starting at 0.
         
-      List<int> LValues;   // LValues will hold the separation
+      //List<int> LValues;   // LValues will hold the separation
       // values for colours/frequencies
       // assigned to towers at specified
       // distances. In particular, if
@@ -93,7 +102,7 @@ int main (int argc, char * argv[]) {
       // assigned colours whose difference (as
       // defined above) is at least k. 
         
-      readGraphAndLValues (TowerNet, LValues, inputFile);
+      //readGraphAndLValues (TowerNet, LValues, inputFile);
       // ASSERT: TowerNet contains information, as a graph, about the
       //            towers and their connectivity
       //         TowerNet contains at least one vertex, and is a
@@ -106,17 +115,17 @@ int main (int argc, char * argv[]) {
       //         All separation values are non-zero, positive integers.
       //         LValues contains at least one separation value.
     
-      int largestColourNeeded; // will hold the largest colour needed
+      //int largestColourNeeded; // will hold the largest colour needed
       // for colouring TowerNet with the constraints
       // given by LValues.
-      colourGraph (TowerNet, LValues, largestColourNeeded);
+      //colourGraph (TowerNet, LValues, largestColourNeeded);
       // ASSERT: numColoursUsed is the smallest value of the largest
       //           colour used to colour TowerNet while
       //           satisfying the constraints given by LValues.
       //         The vertices of TowerNet contain information about the
       //           towers, including the colours assigned to the towers.
     
-      printGraph (TowerNet, outputFile);
+      //printGraph (TowerNet, outputFile);
       // ASSERT: OS contains on the first line the smallest value of
       //           the largest colour used in colouring TowerNet. On
       //           each of the following n lines, OS contains the

@@ -1,16 +1,31 @@
+#ifndef INCLUDED_GRAPH
+#define INCLUDED_GRAPH
+#include "Vertex.h"
+//#include "List.h"
+
 // This class create a graph where the type T is the information, about
 // the vertex, stored at each vertex.
 template <class T>
 class Graph {
+  // Class Invarient (CI): this object will hold objects
+  // that represent an undirected graph.
 
-  // Objects of this class store undirected graphs.
-  
-  // ADD CI
+  // if numVerticies = 0 then root and tail point to NULL;
+  // otherwise for i in n where 0 <= i <
+  // n = numVerticies, i is a Vertex object containing T type
+  // object in order of how it was read in.
+
+  // root points to a Vertex object that was read in first and last
+  // points to the (n - 1)th Vertex object that was read in
+  // last. 
 
  private:
-
-  // MEMBER DATA HERE
-
+  Vertex<T> * root; //This will point the first Vertex object
+		  //in the graph
+  Vertex<T> * tail; //This will point to the last Vertex in the graph
+  int numVerticies; //this will hold the number of verticies
+		    //in this graph.
+ 
   // The graph class must store the vertices as a linked list. Each of
   // the nodes of this linked list must contain an object of type T,
   // i.e., the information for a vertex, and a linked list (or a
@@ -20,47 +35,104 @@ class Graph {
   // list of vertices.
   
  public:
-  // PRE:
+  
+  // PRE: None
   // POST: This graph is an empty graph.
-  Graph<T> ();
+  Graph<T> () {
+    root = NULL;
+    tail = NULL;
+    numVerticies = 0;
+  };
+    
 
   // PRE: G satisfies the CI
   // POST: This graph is a deep copy of G.
-  Graph<T> (const Graph<T> & G);
-
+  Graph<T> (const Graph<T> & G) {
+    *root = *(G.root);
+    //ASSERT: root is a hard copy of G.root
+    Vertex<T> * nextNode = root;
+    while(nextNode->next != NULL) {
+      nextNode = nextNode->getNext();
+    }
+    tail = nextNode;
+    //ASSERT: tail is a pointer to the last Vertex Node
+    //contained in root.
+    numVerticies = G.numVerticies;
+  };
+    
   // PRE: G is defined.
   // POST: RV is (a reference to) a graph that is a deep copy of G. 
-  Graph<T> & operator = (const Graph<T> & G);
+  Graph<T> & operator = (const Graph<T> & G) {
+    *root = *(G.root);
+    //ASSERT: root is a hard copy of G.root
+    Vertex<T> * nextNode = root;
+    while(nextNode->getNext() != NULL) {
+      nextNode = nextNode->getNext();
+    }
+    //ASSERT: last Vertex in graph in found
+    tail = nextNode;
+    //ASSERT: tail is a pointer to the last Vertex Node
+    //contained in root.
+    numVerticies = G.numVerticies;
+    return(*this);
+  };
+    
   
   // PRE: data is defined, and there is no vertex in this graph
   //         containing data.
   // POST: This graph contains a vertex containing data.
   //         The new vertex is not a member of any edges.
-  void addVertex (const T & data);
+  void addVertex (const T & data) {
+    Vertex<T> * newNode = new Vertex<T>(data);
+    //ASSERT: a new Vertex object containing T data was created.
+    Vertex<T> * currentNode = root;
+    //ASSERT: a pointer was created for the root Vertex
+    //object. 
+    while(currentNode->getNext() != NULL) {
+      //ASSERT: the last Vertex object wasn't reached. 
+      currentNode = currentNode->getNext();
+    }
+    currentNode->setNextPointer(newNode);
+    //ASSERT: the Vertex Object that tail->next points to is newNode;
+    tail = newNode;
+    //ASSERT: tail now points to the memory location of
+    //newNode
+    numVerticies += 1;
+  };
 
   // PRE: fromData and toData are defined, and this graph contains a
   //        vertex, u, containing fromData as 
   //        information, and a vertex, v, containing toData as
   //        information.
   // POST: An edge is added connecting u and v.
-  void addEdge (const T & fromData, const T & toData);
+  void addEdge (const T & fromData, const T & toData) {
+
+  };
 
   // PRE: data is defined.
   // POST: RV = the index of the vertex, if any, containing data.
   //          If no such vertex exists, RV = -1.
-  int vIndexOf (const T & data) const;
+  int vIndexOf (const T & data) const {
+
+  };
   
   // POST: RV = the number of vertices in this graph.
-  int getNumVertices () const;
+  int getNumVertices () const {
+
+  };
 
   // PRE: vIndex < number of vertices in this graph
   // POST: RV = the vertex information for vertex at vIndex.
-  T getVertexInfo (int vIndex) const;
+  T getVertexInfo (int vIndex) const {
+
+  };
 
   // PRE: vIndex < number of vertices in this graph
   // POST: RV = the number of edges that the vertex at vIndex is a
   //              member of. 
-  int getNumEdges (int vIndex) const;
+  int getNumEdges (int vIndex) const {
+
+  };
 
   // POST: RV = a pointer to a list of vertices in some order (perhaps
   //              the order in which the vertices were created).
@@ -68,7 +140,7 @@ class Graph {
   //              and needs to be deleted after use.
   //            The returned list must be a deep copy of the list of
   //              vertices stored in the graph.
-  List<T> * getVertices () const;
+  //List<T> * getVertices () const;
 
 
   // PRE: This is a connected graph.
@@ -76,7 +148,7 @@ class Graph {
   //              traversal. 
   //              This is a dynamically created list
   //              and needs to be deleted after use.
-  List<T> * getVerticesDepthFirst () const;
+  //List<T> * getVerticesDepthFirst () const;
 
   
   // PRE: vIndex < number of vertices in this graph
@@ -87,7 +159,7 @@ class Graph {
   //              and needs to be deleted after use.
   //            The returned list must be a deep copy of the list of
   //              edges stored in the graph.
-  List<T> * getNeighbours (int vIndex) const;
+  //List<T> * getNeighbours (int vIndex) const;
 
   // PRE: data is defined, and a vertex, u, in the graph contains data.
   // POST: RV = a pointer to a list of vertices (in any order) that
@@ -97,32 +169,45 @@ class Graph {
   //              and needs to be deleted after use.
   //            The returned list must be a deep copy of the list of
   //              edges stored in the graph.
-  List<T> * getNeighbours (const T & data) const;
+  //List<T> * getNeighbours (const T & data) const;
 
   // PRE: vIndex < number of vertices in this graph.
   // POST: The vertex at vIndex is removed from the graph along with
   //          any edges that the vertex is a member of.
-  void deleteVertex (int vIndex);
+  void deleteVertex (int vIndex) {
+
+  };
 
   // PRE: data is defined.
   // POST: The vertex, if any, containing data is removed from the
   //          graph along with any edges that the vertex is a member
   //          of. 
-  void deleteVertex (const T & data);
+  void deleteVertex (const T & data) {
+
+  };
 
   // PRE: vInindex < number of vertices in this graph.
   //      eIndex < number of edges that the vertex at vIndex is a
   //         member of
   // POST: The edge at eIndex that the vertex at vIndex is a part of
   //         is removed from the graph.
-  void deleteEdge (int vIndex, int eIndex);
+  void deleteEdge (int vIndex, int eIndex) {
+
+  };
 
   // PRE: fromData and toData are defined.
   // POST: The edge, if any, containing the vertex, if any, containing
   //         fromData and the vertex, if any, containing toData is
   //         removed from the graph.
-  void deleteEdge (const T & fromdata, const T & toData);
+  void deleteEdge (const T & fromdata, const T & toData) {
+
+  };
 
   // Destructor
-  ~Graph<T>();
+  ~Graph<T>() {
+    tail = NULL;
+    delete root;
+  };
 };
+
+#endif
