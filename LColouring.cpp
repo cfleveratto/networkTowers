@@ -93,7 +93,7 @@ int main (int argc, char * argv[]) {
       // cell towers. The cell towers are "named"
       // by positive integers starting at 0.
         
-      //List<int> LValues;   // LValues will hold the separation
+      List<int> LValues;   // LValues will hold the separation
       // values for colours/frequencies
       // assigned to towers at specified
       // distances. In particular, if
