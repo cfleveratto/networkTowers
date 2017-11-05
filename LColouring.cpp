@@ -114,21 +114,16 @@ int main (int argc, char * argv[]) {
       //           colour.
       //         All separation values are non-zero, positive integers.
       //         LValues contains at least one separation value.
-      int largestColourNeeded = 3; // will hold the largest colour needed
+      int largestColourNeeded; // will hold the largest colour needed
       // for colouring TowerNet with the constraints
       // given by LValues.
-      //colourGraph (TowerNet, LValues, largestColourNeeded);
+      colourGraph (TowerNet, LValues, largestColourNeeded);
       // ASSERT: numColoursUsed is the smallest value of the largest
       //           colour used to colour TowerNet while
       //           satisfying the constraints given by LValues.
       //         The vertices of TowerNet contain information about the
       //           towers, including the colours assigned to the towers.
-      outFile << TowerNet.getVertexInfo(0);
-      outFile << TowerNet.getVertexInfo(1);
-      outFile << TowerNet.getVertexInfo(2);
-      outFile << TowerNet.getVertexInfo(3);
-      //outFile << TowerNet;
-      //printGraph (TowerNet, outFile, largestColourNeeded);
+      printGraph (TowerNet, outFile, largestColourNeeded);
       // ASSERT: OS contains on the first line the smallest value of
       //           the largest colour used in colouring TowerNet. On
       //           each of the following n lines, OS contains the

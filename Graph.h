@@ -49,7 +49,6 @@ class Graph {
   // PRE: G satisfies the CI
   // POST: This graph is a deep copy of G.
   Graph<T> (const Graph<T> & G) {
-    cout << "Entered Copy Construtor" << endl;
     *root = *(G.root);
     //ASSERT: root is a hard copy of G.root
     Vertex<T> * nextVertex = root;
@@ -142,6 +141,7 @@ class Graph {
 	toPtr = currentVertex;
       }
       currentIndex++;
+      currentVertex = currentVertex->getNext();
     }
     fromPtr->addConnection(toPtr);
     //ASSERT: an edge object was added to the linked list of
@@ -199,7 +199,13 @@ class Graph {
   // POST: RV = the number of edges that the vertex at vIndex is a
   //              member of. 
   int getNumEdges (int vIndex) const {
-    
+    Vertex<T> * currentVertex = root;
+    int currentIndex = 0;
+    while(currentIndex < vIndex) {
+      currentVertex = currentVertex->getNext();
+      currentIndex++;
+    }
+    return(currentVertex->getNumEdges());
   };
 
   // POST: RV = a pointer to a list of vertices in some order (perhaps
@@ -208,7 +214,15 @@ class Graph {
   //              and needs to be deleted after use.
   //            The returned list must be a deep copy of the list of
   //              vertices stored in the graph.
-  //List<T> * getVertices () const;
+  /* List<Vertex<T> > * getVertices () const { */
+  /*   List<Vertex<T> > * vertexList = new List<Vertex<T> >(numVerticies); */
+  /*   Vertex<T> * currentVertex = root; */
+  /*   for (int index = 0; (index < numVerticies); index++) { */
+  /*     vertexList->addElement((*currentVertex), index); */
+  /*     currentVertex = currentVertex->getNext(); */
+  /*   } */
+  /*   return (vertexList); */
+  /* }; */
 
 
   // PRE: This is a connected graph.
@@ -227,7 +241,22 @@ class Graph {
   //              and needs to be deleted after use.
   //            The returned list must be a deep copy of the list of
   //              edges stored in the graph.
-  //List<T> * getNeighbours (int vIndex) const;
+  List<Edge<T> > * getNeighbours (int vIndex) const {
+    Vertex<T> * currentVertex = root;
+    int currentIndex = 0;
+    while(currentIndex < vIndex) {
+      currentVertex = currentVertex->getNext();
+      currentIndex++;
+    }
+    List<Edge<T> > * newList = new List<Edge<T> >(currentVertex->getNumEdges());
+    //this will hold a list of Edge objects
+    Edge<T> * edgesInVertex = currentVertex->getConnections();
+    for (int index = 0; (index < currentVertex->getNumEdges()); index++) {
+      newList->addElement((*edgesInVertex), index);
+      edgesInVertex = edgesInVertex->getNext();
+    }
+    return(newList);
+  };
 
   // PRE: data is defined, and a vertex, u, in the graph contains data.
   // POST: RV = a pointer to a list of vertices (in any order) that
@@ -273,24 +302,33 @@ class Graph {
 
   // Destructor
   ~Graph<T>() {
-    cout << "Desconstrucotr for graph called" << endl;
     tail = NULL;
-    delete root;
+    if (numVerticies > 0) {
+      delete root;
+    };
   };
 
   friend ofstream & operator << (ofstream & stream,
 				 const Graph<T> & G) {
-    stream << G.root;
-    /* Vertex<T> * currentVertex = G.root; */
-    /* stream << *(currentVertex); */
-    /* while (currentVertex->getNext() != NULL) { */
-    /*   stream << *currentVertex; */
-    /*   currentVertex = currentVertex->getNext(); */
-    /* } */
-    /* stream << *(currentVertex); */
+    Vertex<T> * currentVertex = G.root;
+    int index = 0; //will index of vertex;
+    while (currentVertex->getNext() != NULL) {
+      stream << *currentVertex;
+      //stream << "Connections to this Vertex:\n";
+      //stream << currentVertex->getConnections();
+      /* List<Edge<T> > * newlist = G.getNeighbours(index); */
+      /* stream << newlist; */
+      currentVertex = currentVertex->getNext();
+      /* index++; */
+    }
+    stream << *currentVertex;
+    //stream << "Connections to this Vertex:\n";
+    //stream << currentVertex->getConnections();
+    //List<Edge<T> > * newlist = G.getNeighbours(index);
+    //stream << newlist;
     return (stream);
   };
   
-};
+}; 
 
 #endif

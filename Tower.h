@@ -1,6 +1,7 @@
 #ifndef INCLUDED_TOWER
 #define INCLUDED_TOWER
 
+#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -33,6 +34,8 @@ class Tower {
   //copy of T
   Tower & operator = (const Tower & T);
 
+  void assignColor(int color);
+
   //PRE: This object and T are defined
   //POST: RV = true if the name member both are the same integer
   bool operator == (const Tower & T) const;
@@ -40,6 +43,9 @@ class Tower {
   //Overloaded output file stream
   friend ofstream & operator << (ofstream & stream,
 				  const Tower & T);
+  friend ostream & operator << (ostream & stream,
+				 const Tower & T);
+
 };
 
 #endif

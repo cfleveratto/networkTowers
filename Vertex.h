@@ -1,6 +1,6 @@
 #ifndef INCLUDED_VERTEX
 #define INCLUDED_VERTEX
-
+#include "Tower.h"
 #include "Edge.h"
 #include <iostream>
 #include <fstream>
@@ -51,7 +51,7 @@ class Vertex {
   //POST: This graph is a deep copy of G.
   Vertex<T> (const Vertex<T> & V) {
     *data = *(V.data);
-    *connections = *(V.connections);
+    *connections = *(V.connections);3
     *next = *(V.connections);
     numConnections = V.numConnections;
   };
@@ -60,12 +60,31 @@ class Vertex {
   //POST: RV is (a reference to) a Vertex objects that is a
   //deep copy of V. 
   Vertex<T> & operator = (const Vertex<T> & V) {
-    *data = *(V.data);
-    *connections = *(V.connections);
+    if (data != NULL) {
+      cout << "if conndition for data" << endl;
+      delete data;
+      //prevents memory leak
+      data = new Tower(*(V.getData()));
+      //ASSERT copy is a pointer to the data at V.data memory location
+    }
+    else {
+      *data = *(V.data); //ensures that data is always copied
+    }
+    
+    if (connections != NULL) {
+      cout << " If condition for connections : " << endl;
+      //ensures that connections is copied only when V has connections
+      delete connections;
+      *connections = *(V.connections);
+    }
     if (next != NULL) {
+      cout << " If condition for next : " << endl;
+      //ensures that connected is copied only when V has connections
+      delete connections;
       *next = *(V.next);
     }
     numConnections = V.numConnections;
+    cout << "Exiting overloaded = operator: " << endl;
     return(*this);
   };
 
@@ -74,20 +93,29 @@ class Vertex {
   //==============================================
   //PRE: this objects satisfies the CI
   //POST: RV equals data
-  T getData() {
+  T getData() const {
     return(data);
   };
 
   //PRE: this objects satisfies the CI
   //POST: RV is a pointer to Vertex<T> object 
-  Vertex<T> * getNext() {
+  Vertex<T> * getNext() const {
     return(next);
   };
 
+  //access numConnections member data
+  int getNumEdges() {
+    return(numConnections);
+  }
+
+  Edge<T> * getConnections() {
+    return(connections);
+  };
+  
   //=============================================
   //                  MODIFIERS
   //=============================================
-
+  
   //PRE:
   //POST:
   void setNextPointer(Vertex<T> * nextVertex) {
@@ -96,6 +124,9 @@ class Vertex {
   
   //Destructor
   ~Vertex<T>() {
+    if (data != NULL) {
+      delete data;
+    }
     if (connections != NULL) {
       delete connections;
     }
@@ -105,14 +136,12 @@ class Vertex {
   };
 
   void addConnection(Vertex<T> * aPointer) {
-    cout << "Entered addConnection";
+    
     Edge<T> * newEdge = new Edge<T>(aPointer);
     if (numConnections == 0) {
-      cout << "entered if Statement" << endl;
       connections = newEdge;
     }
     else {
-      cout << "entered else statement" << endl;
       Edge<T> * currentEdge = connections;
       while(currentEdge->getNext() != NULL) {
 	//ASSERT: last Edge wasn't reached.
@@ -126,10 +155,22 @@ class Vertex {
     
   friend ofstream & operator << (ofstream & stream,
 				 const Vertex<T> & V) {
-    cout << "Entered root Node"<< endl;
-    //stream << *(V.data);
+    stream << *(V.data);
+    /* if (V.numConnections != 0) { */
+    /*   stream << *(V.connections); */
+    /* }	 */
     return (stream);
   };
+
+  friend ostream & operator << (ostream & stream,
+				 const Vertex<T> & V) {
+    stream << *(V.data);
+    /* if (V.numConnections != 0) { */
+    /*   stream << *(V.connections); */
+    /* } */	
+    return (stream);
+  };
+
 };
 
 #endif

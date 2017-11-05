@@ -47,6 +47,16 @@ void makeConnections (Graph<Tower *> & TowerNet, int currentVertex,
 void  readSepRules(List<int> & LValues, int ruleMax,
 		   ifstream & inputFile);
 
+//PRE: Tower is defined and has a satisfied CI
+//     LValues is a list of integers
+//     largestColor is an integer representing smallest color to color the towers and adhere to seperation rules.
+// ASSERT: numColoursUsed is the smallest value of the largest
+//           colour used to colour TowerNet while
+//           satisfying the constraints given by LValues.
+//         The vertices of TowerNet contain information about the
+//           towers, including the colours assigned to the towers.
+void colourGraph (Graph<Tower *> & TowerNet, const List<int> LValues, int & largestColor);
+
 //PRE: TowerNet is defined and has a satisfied CI.
 //     outFile is a writeable stream.
 //POST: OS contains on the first line the smallest value of

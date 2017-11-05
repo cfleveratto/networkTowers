@@ -3,6 +3,7 @@
 
 #include "Vertex.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 template <class T> class Vertex;
@@ -21,6 +22,12 @@ class Edge {
   Edge<T> * prev;
   
  public:
+
+  Edge<T> () {
+    data = NULL;
+    next = NULL;
+    prev = NULL;
+  };
 
   //PRE: connection is a pointer to a defined Vertex
   //object. 
@@ -57,19 +64,35 @@ class Edge {
     prev = prevEdge;
   };
   
-  
+  Edge<T> & operator = (const Edge<T> & E) {
+    data = E.data;
+    if (E.next != NULL) {
+      *next = *(E.next);
+    }
+    prev = E.prev;
+  };
   //Deconstructor
   //POST: Deletes current Edge object off heap and all edge
   //objects next points to.
   ~Edge<T>() {
-    delete data;
     if (next != NULL) {
       delete next;
       //prev does not need to be deleted since it was
       //already deleted in by its own deconstrucor.
     }
   };
-  
+
+  friend ostream & operator << (ostream & stream,
+  				 const Edge<T> & E) {
+    stream << "Connections for this Vertex:\n";
+    stream << *(E.data);
+    if (E.next != NULL) {
+      stream << *(E.next);
+    }
+    stream << endl;
+    return (stream);
+  };
+
 };
 
 #endif

@@ -15,6 +15,10 @@ Tower::Tower(const Tower & T) {
   coloring = T.coloring;
 }
 
+void Tower::assignColor(int color) {
+  coloring = color;
+}
+
 Tower & Tower::operator = (const Tower & T) {
   name = T.name;
   coloring = T.coloring;
@@ -37,3 +41,12 @@ ofstream & operator << (ofstream & stream,
   return (stream);
 }
 
+
+ostream & operator << (ostream & stream,
+		       const Tower & T) {
+  stream << "Tower Name: "
+	 << T.name << endl;
+  stream << "Tower Coloring: "
+	 << T.coloring << endl;
+  return (stream);
+}

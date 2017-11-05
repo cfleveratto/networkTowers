@@ -25,14 +25,10 @@ void readGraphAndLValues (Graph<Tower *> & TowerNet,
   inputFile >> numTowers;
   for (int index = 0; (index < numTowers); index ++) {
     Tower * newTower = new Tower(index);
-    cout << "Entering addVertex " << endl;
     TowerNet.addVertex(newTower);
-    cout << "Exiting addVertex " << endl;
-    cout << "Entering makeConnections" << endl;
     makeConnections(TowerNet, index, inputFile);
-    cout << "Exiting makeConnection" << endl;
     //ASSERT: all the connections in previous Verticies were
-    //made to the current vertex and stored in TowerNet. 
+    //made to the current vertex and stored in TowerNet.
   }
 
   //ASSERT: all the tower connections were read in for all
@@ -59,21 +55,16 @@ void makeConnections (Graph<Tower *> & TowerNet, int currentVertex,
   for (int index = 0; (index < TowerNet.getNumVertices()); index++) {
     inputFile >> readConnection;
     if (readConnection) {
-      cout << "Entered if statement" << endl;
       //ASSERT: a 1 indicating true was read in from inputFile.
-      cout << "Entering getVertexInfo" << endl;
       Tower * fromData = TowerNet.getVertexInfo(currentVertex);
       Tower * toData = TowerNet.getVertexInfo(index);
-      cout << "Exiting getVertexInfo" << endl;
       //ASSERT fromData and toData point to existing Tower
       //objects allocated on the heap.
-      cout << "addEdge" << endl;
       TowerNet.addEdge(fromData, toData);
       //ASSERT: an Edge object was added to the vertex
       //containing currentVertex data and connected it to a
       //vertext containing index data.
       TowerNet.addEdge(toData, fromData);
-      cout << "Exiting getVertexInfo" << endl;
       //ASSERT: an Edge object was added to the vertex
       //containing index data and connected it to a
       //vertex containing currentVertex data. 
@@ -95,20 +86,28 @@ void  readSepRules(List<int> & LValues, int ruleMax,
 	     //that rule should be stored
   List<int> readValues(ruleMax); //this will hold temporary rules read in.
   inputFile >> rule;
-  cout << "entering while loop" << endl;
   while(rule != RULE_BOUND) {
     //ASSERT: rule was read in.
-    cout << "Entering addElement" << endl;
     readValues.addElement(rule, place);
-    cout << "Exiting addElement" << endl;
     //ASSERT: rule was added to readValues.elements[place]
     inputFile >> rule;
     place++;
   }
-  cout << "exiting while loop" << endl;
   LValues = readValues;
 }
 
+
+//PRE: Tower is defined and has a satisfied CI
+//     LValues is a list of integers
+//     largestColor is an integer representing smallest color to color the towers and adhere to seperation rules.
+// ASSERT: numColoursUsed is the smallest value of the largest
+//           colour used to colour TowerNet while
+//           satisfying the constraints given by LValues.
+//         The vertices of TowerNet contain information about the
+//           towers, including the colours assigned to the towers.
+void colourGraph (Graph<Tower *> & TowerNet, const List<int> LValues, int & largestColor) {
+  
+}
 
 //PRE: TowerNet is defined and has a satisfied CI.
 //     outFile is a writeable stream.
@@ -123,11 +122,8 @@ void  readSepRules(List<int> & LValues, int ruleMax,
 //       names.
 void printGraph(const Graph<Tower *> & TowerNet, ofstream & outFile,
 	   int largestColor) {
-  cout << "Entered printgraph" << endl;
   outFile << "Smallest Value of Largest Color Used: "
 	  << largestColor << endl;
-  cout << "printed smallest value" << endl;
-  cout << TowerNet.getNumVertices();
   outFile << TowerNet;
 }
   

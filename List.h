@@ -49,7 +49,7 @@ class List {
       delete [] elements;
     }
     elements = new T[L.numElements];
-    for (int index = 0; (index < numElements); index++) {
+    for (int index = 0; (index < L.numElements); index++) {
       elements[index] = L.elements[index];
     }
     numElements = L.numElements;
@@ -76,6 +76,19 @@ class List {
       stream << "List Data"
 	     << L.elements[index] << endl;
     }
+    stream << "List amount of elements: "
+	   << L.numElements << endl; 
+    return (stream);
+  };
+
+  friend ostream & operator << (ostream & stream,
+				 const List<T> & L) {
+    for (int index = 0; (index < L.numElements); index++) {
+      stream << "List Data: "
+	     << L.elements[index] << endl;
+    }
+    stream << "List amount of elements: "
+	   << L.numElements << endl;
     return (stream);
   };
 };
