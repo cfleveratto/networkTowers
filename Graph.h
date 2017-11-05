@@ -97,7 +97,7 @@ class Graph {
     tail = newNode;
     //ASSERT: tail now points to the memory location of
     //newNode
-    numVerticies += 1;
+    numVerticies++;
   };
 
   // PRE: fromData and toData are defined, and this graph contains a
@@ -106,7 +106,41 @@ class Graph {
   //        information.
   // POST: An edge is added connecting u and v.
   void addEdge (const T & fromData, const T & toData) {
+    int fromVertex = vIndexOf(fromData); //will hold position in
+				     //graph containing
+				     //fromData. 
+    int toVertex = vIndexOf(toData); //will hold position in
+				     //graph containing toData
+    Vertex<T> * currentVertex = root; //will hold pointer to
+				      //current Vertex
+    int currentIndex = 0; //will hold current index of
+			  //Vertex being visited in this
+			  //object.
+    Vertex<T> * fromPtr; //will point to vertex at index
+			 //fromVertex
+    Vertex<T> * toPtr; // will point ot vertex at index
+		       // toVertex
     
+    bool foundFrom = false;
+    bool foundTo = false;
+    while (!foundFrom || !foundTo) {
+      if(!fromFrom && (fromVertex == currentIndex)) {
+	foundFrom = true;
+	fromPtr = currentVertex;
+      }
+      else if(!foundTo && (toVertex == currentIndex)) {
+	foundTo = true;
+	toPtr = currentVertex;
+      }
+      currentIndex++;
+    }
+    fromPtr->addConnection(toPtr);
+    //ASSERT: an edge object was added to the linked list of
+    //edge object that fromPtr.Edges contains
+    toPtr->addConnection(fromPtr);
+    //ASSERT: an edge object was added to the linked list of
+    //edge object that toPtr.Edges contains
+  };
     
 
   };

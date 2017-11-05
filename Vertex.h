@@ -92,6 +92,17 @@ class Vertex {
     }
   };
 
+  void addConnection(Vertex<T> * aPointer) {
+    Edge<T> * newEdge = new Edge<T>(aPointer);
+    Edge<T> * currentEdge = connections;
+    while(currentEdge->getNext() != NULL) {
+      //ASSERT: last Edge wasn't reached.
+      currentEdge = currentEdge->getNext();
+    }
+    newEdge->setPrevPointer(currentEdge);
+    currentEdge->setNextPointer(newEdge);
+  };
+    
   friend ofstream & operator << (ofstream & stream,
 				 const Vertex<T> & V) {
     stream << V.data;

@@ -58,6 +58,7 @@ class List {
   //POST: element was added to elements[index]
   void addElement(const T & element, int index) {
     elements[index] = element;
+    numElements++;
   };
   //deconstructor
   //PRE: None

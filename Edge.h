@@ -22,7 +22,8 @@ class Edge {
   
  public:
 
-  //PRE: None
+  //PRE: connection is a pointer to a defined Vertex
+  //object. 
   //POST: all pointers a set to None
   Edge<T> (Vertex<T> * connection) {
     data = connection;
@@ -30,12 +31,42 @@ class Edge {
     prev = NULL;
   };
 
+  //PRE: this obejct satisfies CI.
+  //POST: RV is a pointer to a Vertex<T> object
+  Vertex<T> * getData() {
+    return(data);
+  };
+
+  //Accessor to next member data
+  Edge<T> * getNext() {
+    return (next);
+  };
+
+  //Accessor to prev member data
+  Edge<T> * getPrev() {
+    return (prev);
+  };
+
+  //Modifier to next member data
+  void setNextPointer(Edge<T> * nextEdge) {
+    next = nextEdge;
+  };
+
+  //MOdifier to prev member data
+  void setPrevPointer(Edge<T> * prevEdge) {
+    prev = prevEdge;
+  };
+  
   
   //Deconstructor
+  //POST: Deletes current Edge object off heap and all edge
+  //objects next points to.
   ~Edge<T>() {
     delete data;
-    delete next;
-    delete prev;
+    if (next != NULL) {
+      delete next;
+      //prev does not need to be deleted since it was
+      //already deleted in by its own deconstrucor.
   };
   
 };
