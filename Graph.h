@@ -106,6 +106,8 @@ class Graph {
   //        information.
   // POST: An edge is added connecting u and v.
   void addEdge (const T & fromData, const T & toData) {
+    
+    
 
   };
 
@@ -113,19 +115,43 @@ class Graph {
   // POST: RV = the index of the vertex, if any, containing data.
   //          If no such vertex exists, RV = -1.
   int vIndexOf (const T & data) const {
-
+    int index = -1; //will hold the index in Graph of where
+		   //Vertex with data is held.  
+    bool found = false; //will hold the whether the vertex
+			//was found.
+    Vertex<T> * currentVertex; //will point to current
+			       //Vertex
+    currentVertex = root;
+    while (!found && (index < numVerticies)) {
+      if (*(currentVertex->getData()) == data) {
+	found = true;
+      }
+      currentVertex = currentVertex->getNext()
+      index++;
+    }
+    if (!found) {
+      index = -1;
+    }
+    return(index);
   };
   
   // POST: RV = the number of vertices in this graph.
   int getNumVertices () const {
-
+    return (numVerticies);
   };
 
   // PRE: vIndex < number of vertices in this graph
   // POST: RV = the vertex information for vertex at vIndex.
   T getVertexInfo (int vIndex) const {
-
+    Vertex<T> * currentVertex = root;
+    int currentIndex = 0;
+    while(currentIndex < vIndex) {
+      currentVertex = currentVertex->getNext();
+    }
+    return(currentVertex->getData());
   };
+      
+
 
   // PRE: vIndex < number of vertices in this graph
   // POST: RV = the number of edges that the vertex at vIndex is a
@@ -208,6 +234,17 @@ class Graph {
     tail = NULL;
     delete root;
   };
+
+  friend ofstreaam & operator << (ofstream & stream,
+				 const Graph<T> & G) {
+    Vertex<T> * currentVertex = G.root;
+    while (currentVertex != NULL) {
+      stream << *currentVertex;
+      currentVertex = currentVertex->getNext();
+    };
+    return (stream);
+  };
+  
 };
 
 #endif

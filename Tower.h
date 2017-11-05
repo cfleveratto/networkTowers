@@ -29,7 +29,10 @@ class Tower {
   //POST: RV is (a reference to) a Tower object that is a
   //copy of T
   Tower & operator = (const Tower & T);
-  
+
+   
+  friend ofstreaam & operator << (ofstream & stream,
+				  const Tower & T);
 };
 
 #endif
