@@ -1,6 +1,9 @@
 #ifndef INCLUDED_TOWER
 #define INCLUDED_TOWER
 
+#include <fstream>
+
+using namespace std;
 class Tower {
   //CLASS INVARIENT (CI): name and color are nonnegative
   //integers representing the name and coloring of this
@@ -31,7 +34,7 @@ class Tower {
   Tower & operator = (const Tower & T);
 
    
-  friend ofstreaam & operator << (ofstream & stream,
+  friend ofstream & operator << (ofstream & stream,
 				  const Tower & T);
 };
 

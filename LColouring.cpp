@@ -1,4 +1,4 @@
-//#include "helpers.h"
+#include "helpers.h"
 #include "List.h"
 #include "Tower.h"
 #include "Graph.h"
@@ -102,7 +102,7 @@ int main (int argc, char * argv[]) {
       // assigned colours whose difference (as
       // defined above) is at least k. 
         
-      readGraphAndLValues (TowerNet, LValues, inputFile);
+      readGraphAndLValues (TowerNet, LValues, inFile);
       // ASSERT: TowerNet contains information, as a graph, about the
       //            towers and their connectivity
       //         TowerNet contains at least one vertex, and is a
@@ -125,7 +125,7 @@ int main (int argc, char * argv[]) {
       //         The vertices of TowerNet contain information about the
       //           towers, including the colours assigned to the towers.
     
-      printGraph (TowerNet, outputFile, largestColourNeeded);
+      printGraph (TowerNet, outFile, largestColourNeeded);
       // ASSERT: OS contains on the first line the smallest value of
       //           the largest colour used in colouring TowerNet. On
       //           each of the following n lines, OS contains the

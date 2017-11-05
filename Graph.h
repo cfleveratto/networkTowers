@@ -1,7 +1,7 @@
 #ifndef INCLUDED_GRAPH
 #define INCLUDED_GRAPH
 #include "Vertex.h"
-//#include "List.h"
+#include "List.h"
 
 // This class create a graph where the type T is the information, about
 // the vertex, stored at each vertex.
@@ -50,11 +50,11 @@ class Graph {
   Graph<T> (const Graph<T> & G) {
     *root = *(G.root);
     //ASSERT: root is a hard copy of G.root
-    Vertex<T> * nextNode = root;
-    while(nextNode->next != NULL) {
-      nextNode = nextNode->getNext();
+    Vertex<T> * nextVertex = root;
+    while(nextVertex->getNext() != NULL) {
+      nextVertex = nextVertex->getNext();
     }
-    tail = nextNode;
+    tail = nextVertex;
     //ASSERT: tail is a pointer to the last Vertex Node
     //contained in root.
     numVerticies = G.numVerticies;
@@ -126,7 +126,7 @@ class Graph {
       if (*(currentVertex->getData()) == data) {
 	found = true;
       }
-      currentVertex = currentVertex->getNext()
+      currentVertex = currentVertex->getNext();
       index++;
     }
     if (!found) {
@@ -235,7 +235,7 @@ class Graph {
     delete root;
   };
 
-  friend ofstreaam & operator << (ofstream & stream,
+  friend ofstream & operator << (ofstream & stream,
 				 const Graph<T> & G) {
     Vertex<T> * currentVertex = G.root;
     while (currentVertex != NULL) {

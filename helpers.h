@@ -1,5 +1,14 @@
 #ifndef INCLUDED_HELPERS
 #define INCLUDED_HELPERS
+#include "Graph.h"
+#include "List.h"
+#include "Tower.h"
+#include <fstream>
+
+#define RULE_BOUND 0
+
+using namespace std;
+
 
 //PRE:TowerNet and LValues are defined and have a satisfied CI.
 //    inputFile contains information pertaining to the
@@ -16,7 +25,7 @@
 //       colour.
 //      All separation values are non-zero, positive integers.
 //       LValues contains at least one separation value.
-readGraphAndLValues (Graph<Tower *> TowerNet, List<int> LValues,
+void readGraphAndLValues (Graph<Tower *> & TowerNet, List<int> & LValues,
 		     ifstream & inputFile);
 
 //PRE: TowerNet is defined and has a satsfied CI
@@ -28,13 +37,15 @@ readGraphAndLValues (Graph<Tower *> TowerNet, List<int> LValues,
 //     verticies to one another. 
 void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
 		      ifstream & inputFile);
-
 //PRE: LValues is defined and has a satisfied CI.
+//     ruleMax is the largest distance there can be which is
+//     equal to the number of towers being read. 
 //     InputFile contains a stream of integers on one line
 //     indicating a graphs coloring seperation Rules
 //POST: LValues contains the separation values for colours
 //       assigned to towers at specified distances.
-void  readSepRules(List<int> & LValues, ifstream & inputFile);
+void  readSepRules(List<int> & LValues, int ruleMax,
+		   ifstream & inputFile);
 
 //PRE: TowerNet is defined and has a satisfied CI.
 //     outFile is a writeable stream.
@@ -47,6 +58,6 @@ void  readSepRules(List<int> & LValues, ifstream & inputFile);
 //       that tower and all its neighbouring towers.
 //       The towers are on the OS in order of their
 //       names.
-printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
+void printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
 	   int largestColor);
 #endif

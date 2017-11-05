@@ -21,12 +21,12 @@ Tower & Tower::operator = (const Tower & T) {
   return (*this);
 }
 
-ofstreaam & operator << (ofstream & stream,
+ofstream & operator << (ofstream & stream,
 			 const Tower & T) {
   stream << "Tower Name: "
-	 << name << endl;
+	 << T.name << endl;
   stream << "Tower Coloring: "
-	 << coloring << endl;
+	 << T.coloring << endl;
   return (stream);
 }
 

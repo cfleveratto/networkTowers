@@ -6,7 +6,7 @@ colorTowers: $(objects)
 LColouring.o: helpers.h List.h Graph.h Tower.h LColouring.cpp
 	g++ -c LColouring.cpp
 
-helpers.o: helpers.h helpers.cpp
+helpers.o: helpers.h List.h Graph.h Tower.h helpers.cpp
 	g++ -c helpers.cpp
 
 Tower.o: Tower.h Tower.cpp

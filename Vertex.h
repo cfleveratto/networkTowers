@@ -68,7 +68,7 @@ class Vertex {
 
   //PRE: this objects satisfies the CI
   //POST: RV is a pointer to Vertex<T> object 
-  Vertext<T> * getNext() {
+  Vertex<T> * getNext() {
     return(next);
   };
 
@@ -92,9 +92,9 @@ class Vertex {
     }
   };
 
-  friend ofsreaam & operator << (ofstream & stream,
+  friend ofstream & operator << (ofstream & stream,
 				 const Vertex<T> & V) {
-    stream << data;
+    stream << V.data;
     return (stream);
   };
 };

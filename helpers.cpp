@@ -1,12 +1,4 @@
 #include "helpers.h"
-#include "Graph.h"
-#include "List.h"
-#include "Tower.h"
-#include <fstream>
-
-#define RULE_BOUND 0
-
-using namespace std;
 
 //PRE:TowerNet and LValues are defined and have a satisfied CI.
 //    inputFile contains information pertaining to the
@@ -23,13 +15,14 @@ using namespace std;
 //       colour.
 //      All separation values are non-zero, positive integers.
 //       LValues contains at least one separation value.
-readGraphAndLValues (Graph<Tower *> & TowerNet, List<int> & LValues, ifstream & inputFile) {
+void readGraphAndLValues (Graph<Tower *> & TowerNet,
+			  List<int> & LValues, ifstream & inputFile) {
   int numTowers; //this will hold the first integer in input
 		 //file representing how many towers there
 		 //are.  
   inputFile >> numTowers;
   for (int index = 0; (index < numTowers); index ++) {
-    Tower newTower(index);
+    Tower * newTower = new Tower(index);
     TowerNet.addVertex(newTower);
     makeConnections(TowerNet, index, inputFile);
     //ASSERT: all the connections in previous Verticies were
@@ -55,7 +48,7 @@ void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
 		      ifstream & inputFile) {
   bool readConnection; //will hold whether there is a
 		       //connection between verticies.  
-  for (int index = 0; (index < TowerNet.getNumVerticies()); index++) {
+  for (int index = 0; (index < TowerNet.getNumVertices()); index++) {
     inputFile >> readConnection;
     if (readConnection) {
       //ASSERT: a 1 indicating true was read in from inputFile.
@@ -82,20 +75,21 @@ void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
 //     indicating a graphs coloring seperation Rules
 //POST: LValues contains the separation values for colours
 //       assigned to towers at specified distances.
-void  readSepRules(List<int> & LValues, int ruleMax, ifstream & inputFile) {
+void  readSepRules(List<int> & LValues, int ruleMax,
+		   ifstream & inputFile) {
   int rule; //this will hold the seperation rule.
   int place; //this will hold the index in LValues.elements
 	     //that rule should be stored
+  List<int> readValues(ruleMax); //this will hold temporary rules read in.
   inputFile >> rule;
   while(rule != RULE_BOUND) {
     //ASSERT: rule was read in.
-    List<int> readValues(ruleMax);
-    LValues.addRule(rule, place);
-    //ASSERT: rule was added to LValue.elements[
+    readValues.addElement(rule, place);
+    //ASSERT: rule was added to readValues.elements[place]
     inputFile >> rule;
     place++;
   }
-  Lvalues = readValues;
+  LValues = readValues;
 }
 
 
@@ -110,7 +104,7 @@ void  readSepRules(List<int> & LValues, int ruleMax, ifstream & inputFile) {
 //       that tower and all its neighbouring towers.
 //       The towers are on the OS in order of their
 //       names.
-printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
+void printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
 	   int largestColor) {
   outFile << "Smallest Value of Largest Color Used: "
 	  << largestColor << endl;

@@ -54,6 +54,11 @@ class List {
     return (*this);
   };
 
+  //PRE: element is a T type object 
+  //POST: element was added to elements[index]
+  void addElement(const T & element, int index) {
+    elements[index] = element;
+  };
   //deconstructor
   //PRE: None
   //POST: deletes the objects that are stored in an array
@@ -62,11 +67,11 @@ class List {
     delete [] elements;
   };
 
-  friend ofsreaam & operator << (ofstream & stream,
+  friend ofstream & operator << (ofstream & stream,
 				 const List<T> & L) {
-    for (int index = 0; (index < numElements); index++) {
+    for (int index = 0; (index < L.numElements); index++) {
       stream << "List Data"
-	     << elements[index] << endl;
+	     << L.elements[index] << endl;
     }
     return (stream);
   };
