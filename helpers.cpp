@@ -1,5 +1,7 @@
 #include "helpers.h"
+#include <iostream>
 
+using namespace std;
 //PRE:TowerNet and LValues are defined and have a satisfied CI.
 //    inputFile contains information pertaining to the
 //    composition of an indirected graph and its coloring
@@ -23,17 +25,23 @@ void readGraphAndLValues (Graph<Tower *> & TowerNet,
   inputFile >> numTowers;
   for (int index = 0; (index < numTowers); index ++) {
     Tower * newTower = new Tower(index);
+    cout << "Entering addVertex " << endl;
     TowerNet.addVertex(newTower);
+    cout << "Exiting addVertex " << endl;
+    cout << "Entering makeConnections" << endl;
     makeConnections(TowerNet, index, inputFile);
+    cout << "Exiting makeConnection" << endl;
     //ASSERT: all the connections in previous Verticies were
     //made to the current vertex and stored in TowerNet. 
-    
   }
+
   //ASSERT: all the tower connections were read in for all
-  //verticies in TowerNet.  
+  //verticies in TowerNet.
+  
   readSepRules(LValues, numTowers, inputFile);
   //ASSERT: the seperation rules which are postive
-  //non-negative values were read in and stored in LValues. 
+  //non-negative values were read in and stored in LValues.
+
 }
 
 
@@ -44,23 +52,28 @@ void readGraphAndLValues (Graph<Tower *> & TowerNet,
 //     the connections of a vertex.
 //POST: Edge objects were created that linked existing
 //     verticies to one another. 
-void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
+void makeConnections (Graph<Tower *> & TowerNet, int currentVertex,
 		      ifstream & inputFile) {
   bool readConnection; //will hold whether there is a
 		       //connection between verticies.  
   for (int index = 0; (index < TowerNet.getNumVertices()); index++) {
     inputFile >> readConnection;
     if (readConnection) {
+      cout << "Entered if statement" << endl;
       //ASSERT: a 1 indicating true was read in from inputFile.
+      cout << "Entering getVertexInfo" << endl;
       Tower * fromData = TowerNet.getVertexInfo(currentVertex);
       Tower * toData = TowerNet.getVertexInfo(index);
+      cout << "Exiting getVertexInfo" << endl;
       //ASSERT fromData and toData point to existing Tower
       //objects allocated on the heap.
+      cout << "addEdge" << endl;
       TowerNet.addEdge(fromData, toData);
       //ASSERT: an Edge object was added to the vertex
       //containing currentVertex data and connected it to a
       //vertext containing index data.
       TowerNet.addEdge(toData, fromData);
+      cout << "Exiting getVertexInfo" << endl;
       //ASSERT: an Edge object was added to the vertex
       //containing index data and connected it to a
       //vertex containing currentVertex data. 
@@ -78,17 +91,21 @@ void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
 void  readSepRules(List<int> & LValues, int ruleMax,
 		   ifstream & inputFile) {
   int rule; //this will hold the seperation rule.
-  int place; //this will hold the index in LValues.elements
+  int place = 0; //this will hold the index in LValues.elements
 	     //that rule should be stored
   List<int> readValues(ruleMax); //this will hold temporary rules read in.
   inputFile >> rule;
+  cout << "entering while loop" << endl;
   while(rule != RULE_BOUND) {
     //ASSERT: rule was read in.
+    cout << "Entering addElement" << endl;
     readValues.addElement(rule, place);
+    cout << "Exiting addElement" << endl;
     //ASSERT: rule was added to readValues.elements[place]
     inputFile >> rule;
     place++;
   }
+  cout << "exiting while loop" << endl;
   LValues = readValues;
 }
 
@@ -104,10 +121,13 @@ void  readSepRules(List<int> & LValues, int ruleMax,
 //       that tower and all its neighbouring towers.
 //       The towers are on the OS in order of their
 //       names.
-void printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
+void printGraph(const Graph<Tower *> & TowerNet, ofstream & outFile,
 	   int largestColor) {
+  cout << "Entered printgraph" << endl;
   outFile << "Smallest Value of Largest Color Used: "
 	  << largestColor << endl;
+  cout << "printed smallest value" << endl;
+  cout << TowerNet.getNumVertices();
   outFile << TowerNet;
 }
   

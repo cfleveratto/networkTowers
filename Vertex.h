@@ -30,13 +30,18 @@ class Vertex {
 
  public:
 
-  //PRE: None
-  //POST: CI is satisfied
+  Vertex<T> () {
+    data = NULL;
+    connections = NULL;
+    next = NULL;
+    numConnections = 0;
+  };
+
   //PRE: newData is a pointer of type T.
   //POST: This object contains T data and connections points
   //to NULL
   Vertex<T> (const T & newData) {
-    *data = *newData;
+    data = newData;
     connections = NULL;
     next = NULL;
     numConnections = 0;
@@ -100,12 +105,14 @@ class Vertex {
   };
 
   void addConnection(Vertex<T> * aPointer) {
+    cout << "Entered addConnection";
     Edge<T> * newEdge = new Edge<T>(aPointer);
     if (numConnections == 0) {
+      cout << "entered if Statement" << endl;
       connections = newEdge;
     }
     else {
-      
+      cout << "entered else statement" << endl;
       Edge<T> * currentEdge = connections;
       while(currentEdge->getNext() != NULL) {
 	//ASSERT: last Edge wasn't reached.
@@ -119,7 +126,8 @@ class Vertex {
     
   friend ofstream & operator << (ofstream & stream,
 				 const Vertex<T> & V) {
-    stream << V.data;
+    cout << "Entered root Node"<< endl;
+    //stream << *(V.data);
     return (stream);
   };
 };

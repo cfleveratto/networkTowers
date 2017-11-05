@@ -45,7 +45,9 @@ class List {
   //POST: RV is a reference to a List object that is a deep
   //copy of L. 
   List & operator = (const List<T> & L) {
-    delete [] elements;
+    if (numElements != 0) {
+      delete [] elements;
+    }
     elements = new T[L.numElements];
     for (int index = 0; (index < numElements); index++) {
       elements[index] = L.elements[index];

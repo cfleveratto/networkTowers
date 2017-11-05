@@ -35,7 +35,7 @@ void readGraphAndLValues (Graph<Tower *> & TowerNet, List<int> & LValues,
 //     the connections of a vertex.
 //POST: Edge objects were created that linked existing
 //     verticies to one another. 
-void makeConnections (Graph<Tower *> TowerNet, int currentVertex,
+void makeConnections (Graph<Tower *> & TowerNet, int currentVertex,
 		      ifstream & inputFile);
 //PRE: LValues is defined and has a satisfied CI.
 //     ruleMax is the largest distance there can be which is
@@ -58,6 +58,6 @@ void  readSepRules(List<int> & LValues, int ruleMax,
 //       that tower and all its neighbouring towers.
 //       The towers are on the OS in order of their
 //       names.
-void printGraph(Graph<Tower *> TowerNet, ofstream & outFile,
+void printGraph(const Graph<Tower *> & TowerNet, ofstream & outFile,
 	   int largestColor);
 #endif

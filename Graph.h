@@ -2,7 +2,8 @@
 #define INCLUDED_GRAPH
 #include "Vertex.h"
 #include "List.h"
-
+#include <iostream>
+#include <fstream>
 // This class create a graph where the type T is the information, about
 // the vertex, stored at each vertex.
 template <class T>
@@ -48,6 +49,7 @@ class Graph {
   // PRE: G satisfies the CI
   // POST: This graph is a deep copy of G.
   Graph<T> (const Graph<T> & G) {
+    cout << "Entered Copy Construtor" << endl;
     *root = *(G.root);
     //ASSERT: root is a hard copy of G.root
     Vertex<T> * nextVertex = root;
@@ -271,17 +273,21 @@ class Graph {
 
   // Destructor
   ~Graph<T>() {
+    cout << "Desconstrucotr for graph called" << endl;
     tail = NULL;
     delete root;
   };
 
   friend ofstream & operator << (ofstream & stream,
 				 const Graph<T> & G) {
-    Vertex<T> * currentVertex = G.root;
-    while (currentVertex != NULL) {
-      stream << *currentVertex;
-      currentVertex = currentVertex->getNext();
-    };
+    stream << G.root;
+    /* Vertex<T> * currentVertex = G.root; */
+    /* stream << *(currentVertex); */
+    /* while (currentVertex->getNext() != NULL) { */
+    /*   stream << *currentVertex; */
+    /*   currentVertex = currentVertex->getNext(); */
+    /* } */
+    /* stream << *(currentVertex); */
     return (stream);
   };
   
