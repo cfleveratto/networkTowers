@@ -67,6 +67,7 @@ class Edge {
       delete next;
       //prev does not need to be deleted since it was
       //already deleted in by its own deconstrucor.
+    }
   };
   
 };

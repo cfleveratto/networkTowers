@@ -21,6 +21,13 @@ Tower & Tower::operator = (const Tower & T) {
   return (*this);
 }
 
+
+//PRE: This object and T are defined
+//POST: RV = true if the name member both are the same integer
+bool Tower::operator == (const Tower & T) const {
+  return(name == T.name);
+}
+
 ofstream & operator << (ofstream & stream,
 			 const Tower & T) {
   stream << "Tower Name: "

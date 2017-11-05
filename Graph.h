@@ -124,11 +124,13 @@ class Graph {
     bool foundFrom = false;
     bool foundTo = false;
     while (!foundFrom || !foundTo) {
-      if(!fromFrom && (fromVertex == currentIndex)) {
+      if(!foundFrom && (fromVertex == currentIndex)) {
+	//ASSERT: the index of the vertex containting fromData was not found. 
 	foundFrom = true;
 	fromPtr = currentVertex;
       }
       else if(!foundTo && (toVertex == currentIndex)) {
+	//ASSERT: the index of the vertex containting toData was not found. 
 	foundTo = true;
 	toPtr = currentVertex;
       }
@@ -140,9 +142,6 @@ class Graph {
     toPtr->addConnection(fromPtr);
     //ASSERT: an edge object was added to the linked list of
     //edge object that toPtr.Edges contains
-  };
-    
-
   };
 
   // PRE: data is defined.
@@ -157,7 +156,7 @@ class Graph {
 			       //Vertex
     currentVertex = root;
     while (!found && (index < numVerticies)) {
-      if (*(currentVertex->getData()) == data) {
+      if (*(currentVertex->getData()) == *data) {
 	found = true;
       }
       currentVertex = currentVertex->getNext();
@@ -191,7 +190,7 @@ class Graph {
   // POST: RV = the number of edges that the vertex at vIndex is a
   //              member of. 
   int getNumEdges (int vIndex) const {
-
+    
   };
 
   // POST: RV = a pointer to a list of vertices in some order (perhaps

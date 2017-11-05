@@ -101,6 +101,7 @@ class Vertex {
     }
     newEdge->setPrevPointer(currentEdge);
     currentEdge->setNextPointer(newEdge);
+    numConnections++;
   };
     
   friend ofstream & operator << (ofstream & stream,

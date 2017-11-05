@@ -33,7 +33,11 @@ class Tower {
   //copy of T
   Tower & operator = (const Tower & T);
 
-   
+  //PRE: This object and T are defined
+  //POST: RV = true if the name member both are the same integer
+  bool operator == (const Tower & T) const;
+
+  //Overloaded output file stream
   friend ofstream & operator << (ofstream & stream,
 				  const Tower & T);
 };
