@@ -11,8 +11,13 @@ template<class T>
 class Vertex {
   //Class Invarient (CI): data is a pointer of type T.
 
-  //If this vertex is connected to other verticies then Edge
-  //points to those connections
+  //If this vertex is connected to other verticies then
+  //connections will hold edge objects that contains
+  //pointers to those other Vertex objects and
+  //numConnections > 0.
+
+  //next points to the next vertex
+
 
  private:
   T data; //this will hold data of type T.
@@ -25,6 +30,8 @@ class Vertex {
 
  public:
 
+  //PRE: None
+  //POST: CI is satisfied
   //PRE: newData is a pointer of type T.
   //POST: This object contains T data and connections points
   //to NULL
@@ -94,13 +101,19 @@ class Vertex {
 
   void addConnection(Vertex<T> * aPointer) {
     Edge<T> * newEdge = new Edge<T>(aPointer);
-    Edge<T> * currentEdge = connections;
-    while(currentEdge->getNext() != NULL) {
-      //ASSERT: last Edge wasn't reached.
-      currentEdge = currentEdge->getNext();
+    if (numConnections == 0) {
+      connections = newEdge;
     }
-    newEdge->setPrevPointer(currentEdge);
-    currentEdge->setNextPointer(newEdge);
+    else {
+      
+      Edge<T> * currentEdge = connections;
+      while(currentEdge->getNext() != NULL) {
+	//ASSERT: last Edge wasn't reached.
+	currentEdge = currentEdge->getNext();
+      }
+      newEdge->setPrevPointer(currentEdge);
+      currentEdge->setNextPointer(newEdge);
+    }
     numConnections++;
   };
     

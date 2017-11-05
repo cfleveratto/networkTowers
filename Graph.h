@@ -85,15 +85,20 @@ class Graph {
   void addVertex (const T & data) {
     Vertex<T> * newNode = new Vertex<T>(data);
     //ASSERT: a new Vertex object containing T data was created.
-    Vertex<T> * currentNode = root;
-    //ASSERT: a pointer was created for the root Vertex
-    //object. 
-    while(currentNode->getNext() != NULL) {
-      //ASSERT: the last Vertex object wasn't reached. 
-      currentNode = currentNode->getNext();
+    if (numVerticies == 0) {
+      root = newNode;
     }
-    currentNode->setNextPointer(newNode);
-    //ASSERT: the Vertex Object that tail->next points to is newNode;
+    else{
+      Vertex<T> * currentNode = root;
+      //ASSERT: a pointer was created for the root Vertex
+      //object. 
+      while(currentNode->getNext() != NULL) {
+	//ASSERT: the last Vertex object wasn't reached. 
+	currentNode = currentNode->getNext();
+      }
+      currentNode->setNextPointer(newNode);
+      //ASSERT: the Vertex Object that tail->next points to is newNode;
+    }
     tail = newNode;
     //ASSERT: tail now points to the memory location of
     //newNode
@@ -148,13 +153,12 @@ class Graph {
   // POST: RV = the index of the vertex, if any, containing data.
   //          If no such vertex exists, RV = -1.
   int vIndexOf (const T & data) const {
-    int index = -1; //will hold the index in Graph of where
+    int index = 0; //will hold the index in Graph of where
 		   //Vertex with data is held.  
     bool found = false; //will hold the whether the vertex
 			//was found.
-    Vertex<T> * currentVertex; //will point to current
-			       //Vertex
-    currentVertex = root;
+    Vertex<T> * currentVertex = root; //will point to current
+			              //Vertex
     while (!found && (index < numVerticies)) {
       if (*(currentVertex->getData()) == *data) {
 	found = true;
@@ -163,9 +167,11 @@ class Graph {
       index++;
     }
     if (!found) {
-      index = -1;
+      index = 0;
+      //Will assure that return value is -1 in case the loop
+      //goes all the way to end boundary
     }
-    return(index);
+    return(index - 1);
   };
   
   // POST: RV = the number of vertices in this graph.
@@ -180,6 +186,7 @@ class Graph {
     int currentIndex = 0;
     while(currentIndex < vIndex) {
       currentVertex = currentVertex->getNext();
+      currentIndex++;
     }
     return(currentVertex->getData());
   };

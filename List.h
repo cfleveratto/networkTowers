@@ -28,7 +28,7 @@ class List {
   //an array that elements points to. 
   List<T> (int listMax) {
     elements = new T[listMax];
-    numElements = listMax;
+    numElements = 0;
   };
 
   //PRE: L is a defined List<T> object
